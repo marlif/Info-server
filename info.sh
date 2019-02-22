@@ -197,9 +197,9 @@ get_sys_stats() {
 	fi
 	#dns
 	if [[ "$(pidof bind9 2> /dev/null)" != "" ]]; then 
-		bind9_status="${COL_LIGHT_GREEN}Active${COL_NC}"
+		dns_status="${COL_LIGHT_GREEN}Active${COL_NC}"
 	else
-		bind9_status="${COL_LIGHT_RED}Offline${COL_NC}"
+		dns_status="${COL_LIGHT_RED}Offline${COL_NC}"
 	fi
 	#mysql
 	if [[ "$(pidof mysql 2> /dev/null)" != "" ]]; then 
@@ -286,7 +286,7 @@ echo -e "$COL_DARK_GRAY=======================================================$C
 		printFunc "   IP addr: " "$MYIP" "$lan_info"
 		printFunc "  Internet: " "$internet_status"  
 		printFunc " Webserver: " "$apache_status"
-        printFunc "       DNS: " "$sbind9_status" 
+        	printFunc "       DNS: " "$dns_status" 
 		printFunc "   PHP-FPM: " "$php_status"
 		printFunc "     MySQL: " "$mysql_status" "last"
 
