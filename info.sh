@@ -196,13 +196,13 @@ get_sys_stats() {
 		php_status="${COL_LIGHT_RED}Offline${COL_NC}"
 	fi
 	#dns
-	if [[ "$(pidof bind9 2> /dev/null)" != "" ]]; then 
+	if [[ "$(pidof named 2> /dev/null)" != "" ]]; then 
 		dns_status="${COL_LIGHT_GREEN}Active${COL_NC}"
 	else
 		dns_status="${COL_LIGHT_RED}Offline${COL_NC}"
 	fi
 	#mysql
-	if [[ "$(pidof mysql 2> /dev/null)" != "" ]]; then 
+	if [[ "$(pidof mysqld 2> /dev/null)" != "" ]]; then 
 		mysql_status="${COL_LIGHT_GREEN}Active${COL_NC}"
 	else
 		mysql_status="${COL_LIGHT_RED}Offline${COL_NC}"
