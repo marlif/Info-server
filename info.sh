@@ -286,10 +286,9 @@ echo -e "$COL_DARK_GRAY=======================================================$C
 		printFunc "   IP addr: " "$MYIP" "$lan_info"
 		printFunc "  Internet: " "$internet_status"  
 		printFunc " Webserver: " "$apache_status"
-		printFunc "    	  DNS: " "$bind9_status"
-		printFunc "   PHP-FPM: " "$php_status"  
+        printFunc "       DNS: " "$sbind9_status" 
+		printFunc "   PHP-FPM: " "$php_status"
 		printFunc "     MySQL: " "$mysql_status" "last"
-		#printFunc "" "" "last"		
 
 
         # Handle exit/refresh options
