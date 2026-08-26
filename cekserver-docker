@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Daftar nama kontainer yang ingin dicek (sesuaikan dengan nama asli kontainer Anda)
+CONTAINERS=("mariadb_server" "immich-server" "portainer" "phpmyadmin_server" "vhost-manager")
+
+# Kode Warna untuk Output Terminal
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+NC='\033[0m' # No Color (Reset)
+
+echo "=================================================="
+echo "         MONITORING STATUS KONTAINER DOCKER       "
+echo "=================================================="
+
+for CONTAINER in "${CONTAINERS[@]}"; do
+    # 1. Cek apakah kontainer ada di sistem
+    EXISTS=$(docker ps -a --filter "name=^/${CONTAINER}$" --format "{{.Names}}")
+    
+    if [ -z "$EXISTS" ]; then
+        echo -e "Layanan: ${YELLOW}$CONTAINER${NC} -> ${RED}Tidak Ditemukan di Server${NC}"
+        continue
+    fi
+
+    # 2. Ambil teks status seperti "Up 2 hours (healthy)"
+    STATUS=$(docker ps -a --filter "name=^/${CONTAINER}$" --format "{{.Status}}")
+    
+    # 3. Ambil nilai PID untuk memastikan prosesnya ada di kernel
+    PID=$(docker inspect -f '{{.State.Pid}}' "$CONTAINER" 2>/dev/null)
+
+    # 4. Logika pewarnaan berdasarkan status aktif/mati
+    if [[ "$STATUS" == *"Up"* ]]; then
+        echo -e "Layanan: ${GREEN}$CONTAINER${NC}"
+        echo -e "  └─ Status : $STATUS"
+        echo -e "  └─ PID    : $PID"
+    else
+        echo -e "Layanan: ${RED}$CONTAINER${NC}"
+        echo -e "  └─ Status : ${RED}$STATUS (MATI)${NC}"
+    fi
+    echo "--------------------------------------------------"
+done
